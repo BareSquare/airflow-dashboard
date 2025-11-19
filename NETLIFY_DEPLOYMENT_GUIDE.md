@@ -145,9 +145,10 @@ Now we'll add your Airflow credentials securely:
 3. Click **"Add a variable"** → **"Add a single variable"**
 
 4. Add your first variable:
-   - **Key**: `AIRFLOW_API_URL`
-   - **Value**: Your Astronomer URL (e.g., `https://your-deployment.astronomer.run/api/v1`)
+   - **Key**: `AIRFLOW_API_BASE_URL`
+   - **Value**: Your Astronomer URL (e.g., `https://your-deployment.astronomer.run`)
    - **Scopes**: Select "All scopes" (or just "Builds" and "Functions")
+5. (Optional) add `AIRFLOW_API_VERSION` to pin a specific Airflow version (`2` for Airflow 3).
    - Click **"Create variable"**
 
 5. Click **"Add a variable"** again
@@ -299,7 +300,7 @@ For live debugging:
 **Possible causes:**
 1. **Missing environment variables**
    - Check: Site configuration → Environment variables
-   - Verify: `AIRFLOW_API_URL` and `AIRFLOW_API_TOKEN` are set
+   - Verify: `AIRFLOW_API_BASE_URL`, `AIRFLOW_API_VERSION` (optional), and `AIRFLOW_API_TOKEN` are set
 
 2. **Invalid Airflow credentials**
    - Test your token with curl:
@@ -477,7 +478,7 @@ Before considering deployment complete:
 - [ ] Build command set to `npm run build`
 - [ ] Publish directory set to `dist`
 - [ ] Functions directory set to `netlify/functions`
-- [ ] Environment variables added (AIRFLOW_API_URL, AIRFLOW_API_TOKEN)
+- [ ] Environment variables added (AIRFLOW_API_BASE_URL, AIRFLOW_API_VERSION, AIRFLOW_API_TOKEN)
 
 **Testing:**
 - [ ] Site deploys successfully (green checkmark)

@@ -1,4 +1,4 @@
-const REQUIRED_ENV_VARS = ['AIRFLOW_API_TOKEN'];
+const REQUIRED_ENV_VARS = ['AIRFLOW_API_BASE_URL', 'AIRFLOW_API_TOKEN'];
 const DEFAULT_API_VERSION = process.env.AIRFLOW_API_VERSION || '2';
 
 /**
@@ -22,14 +22,6 @@ export const jsonResponse = (statusCode, payload) => ({
  */
 const ensureEnvironment = () => {
   const missing = REQUIRED_ENV_VARS.filter((name) => !process.env[name]);
-  const hasBaseUrl =
-    Boolean(process.env.AIRFLOW_API_BASE_URL) ||
-    Boolean(process.env.AIRFLOW_API_URL);
-
-  if (!hasBaseUrl) {
-    missing.push('AIRFLOW_API_BASE_URL');
-  }
-
   if (missing.length) {
     throw new Error(`Missing environment variables: ${missing.join(', ')}`);
   }
@@ -37,12 +29,11 @@ const ensureEnvironment = () => {
 
 /**
  * Resolves the Airflow API base URL and guarantees `/api/vX` suffix.
- * Accepts either AIRFLOW_API_BASE_URL (preferred) or legacy AIRFLOW_API_URL.
+ * Builds the Airflow API base using AIRFLOW_API_BASE_URL and AIRFLOW_API_VERSION.
  * @returns {string}
  */
 const resolveAirflowBaseUrl = () => {
-  const configured =
-    process.env.AIRFLOW_API_BASE_URL || process.env.AIRFLOW_API_URL;
+  const configured = process.env.AIRFLOW_API_BASE_URL;
 
   if (!configured) {
     throw new Error('AIRFLOW_API_BASE_URL is not configured');

@@ -72,7 +72,8 @@ claude-code "Read the PROJECT_BRIEF.md file and CLAUDE_INSTRUCTIONS.md file, the
 ### Test Locally During Development
 ```bash
 # Create .env.local file (DO NOT commit this)
-echo "AIRFLOW_API_URL=https://[your-deployment].astronomer.run/api/v1" > .env.local
+echo "AIRFLOW_API_BASE_URL=https://[your-deployment].astronomer.run" > .env.local
+echo "AIRFLOW_API_VERSION=2" >> .env.local
 echo "AIRFLOW_API_TOKEN=[your-token]" >> .env.local
 
 # Test with Netlify Dev (simulates production)
@@ -157,8 +158,8 @@ git push origin main
 ### Add Environment Variables
 - [ ] Go to **Site configuration** → **Environment variables**
 - [ ] Add variable:
-  - Key: `AIRFLOW_API_URL`
-  - Value: `https://[your-deployment].astronomer.run/api/v1`
+  - Key: `AIRFLOW_API_BASE_URL`
+  - Value: `https://[your-deployment].astronomer.run`
 - [ ] Add variable:
   - Key: `AIRFLOW_API_TOKEN`
   - Value: `[your-read-only-token]`

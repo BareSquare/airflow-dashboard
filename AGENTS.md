@@ -173,9 +173,9 @@ exports.handler = async () => {
 **4. ALWAYS validate environment variables**
 ```javascript
 exports.handler = async () => {
-  const { AIRFLOW_API_URL, AIRFLOW_API_TOKEN } = process.env;
+  const { AIRFLOW_API_BASE_URL, AIRFLOW_API_TOKEN } = process.env;
   
-  if (!AIRFLOW_API_URL || !AIRFLOW_API_TOKEN) {
+  if (!AIRFLOW_API_BASE_URL || !AIRFLOW_API_TOKEN) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Missing configuration' })
@@ -511,7 +511,7 @@ try {
 const API_URL = 'https://my-deployment.astronomer.run';
 
 // ✅ GOOD
-const API_URL = process.env.AIRFLOW_API_URL;
+const API_URL = process.env.AIRFLOW_API_BASE_URL;
 ```
 
 ---
@@ -682,7 +682,7 @@ typically <100 items. Can add server-side if needed."
 Could you double-check:
 1. Is the API token still valid?
 2. Does it have read permissions for /dags endpoint?
-3. Is the AIRFLOW_API_URL correct?
+3. Is the AIRFLOW_API_BASE_URL correct?
 ```
 
 ---

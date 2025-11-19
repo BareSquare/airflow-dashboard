@@ -374,8 +374,9 @@ airflow-dashboard/
 
 **File: `.env.example`** (commit to repo as template)
 ```env
-AIRFLOW_API_URL=https://your-deployment.astronomer.run/api/v1
+AIRFLOW_API_BASE_URL=https://your-deployment.astronomer.run
 AIRFLOW_API_TOKEN=your_read_only_token_here
+AIRFLOW_API_VERSION=2
 ```
 
 **File: `.gitignore`** (must include)
@@ -390,8 +391,9 @@ dist/
 
 **In Netlify Dashboard** (add after deployment):
 ```
-AIRFLOW_API_URL = https://[actual-deployment].astronomer.run/api/v1
+AIRFLOW_API_BASE_URL = https://[actual-deployment].astronomer.run
 AIRFLOW_API_TOKEN = [actual-read-only-token]
+AIRFLOW_API_VERSION = 2
 ```
 
 ### Netlify Function Pattern
@@ -404,10 +406,10 @@ const fetch = require('node-fetch');
 
 exports.handler = async (event, context) => {
   // Get credentials from environment (server-side only)
-  const { AIRFLOW_API_URL, AIRFLOW_API_TOKEN } = process.env;
+  const { AIRFLOW_API_BASE_URL, AIRFLOW_API_TOKEN } = process.env;
   
   // Validate environment
-  if (!AIRFLOW_API_URL || !AIRFLOW_API_TOKEN) {
+  if (!AIRFLOW_API_BASE_URL || !AIRFLOW_API_TOKEN) {
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Missing Airflow configuration' })
@@ -415,8 +417,9 @@ exports.handler = async (event, context) => {
   }
   
   try {
-    // Make authenticated request to Airflow
-    const response = await fetch(`${AIRFLOW_API_URL}/dags`, {
+  const apiUrl = `${AIRFLOW_API_BASE_URL.replace(/\/$/, '')}/api/v2`;
+  // Make authenticated request to Airflow
+  const response = await fetch(`${apiUrl}/dags`, {
       headers: {
         'Authorization': `Bearer ${AIRFLOW_API_TOKEN}`,
         'Content-Type': 'application/json'
@@ -763,7 +766,8 @@ Modern web dashboard for monitoring Apache Airflow DAGs via Astronomer Cloud.
 3. **Add environment variables in Netlify**
    - Go to Site settings > Environment variables
    - Add:
-     - `AIRFLOW_API_URL`: Your Astronomer API URL
+    - `AIRFLOW_API_BASE_URL`: Your Astronomer workspace URL (no `/api/v*`)
+    - `AIRFLOW_API_VERSION`: Optional API version (defaults to `2`)
      - `AIRFLOW_API_TOKEN`: Your read-only API token
 
 4. **Deploy!**

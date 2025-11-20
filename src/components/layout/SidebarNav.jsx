@@ -1,8 +1,9 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, ListTree, AlertTriangle } from 'lucide-react';
+import { LayoutDashboard, ListTree, AlertTriangle, Sparkles } from 'lucide-react';
 
 export const NAV_ITEMS = [
   { label: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
+  { label: 'Fancy Dashboard', to: '/fancy-dashboard', icon: Sparkles },
   { label: 'DAGs', to: '/dags', icon: ListTree },
   { label: 'Error Logs', to: '/errors', icon: AlertTriangle }
 ];

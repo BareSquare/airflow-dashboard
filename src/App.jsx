@@ -4,6 +4,7 @@ import DagListPage from './pages/DagList.jsx';
 import DagDetailPage from './pages/DagDetail.jsx';
 import ErrorLogsPage from './pages/ErrorLogs.jsx';
 import NotFoundPage from './pages/NotFound.jsx';
+import FancyDashboardPage from './pages/FancyDashboard.jsx';
 
 /**
  * App - defines routing configuration for the dashboard.
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/fancy-dashboard" element={<FancyDashboardPage />} />
       <Route path="/dags" element={<DagListPage />} />
       <Route path="/dags/:dagId" element={<DagDetailPage />} />
       <Route path="/errors" element={<ErrorLogsPage />} />
